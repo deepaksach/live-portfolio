@@ -29,7 +29,7 @@ export function WatchlistScreen({ navigation }: Props) {
   const openAdd = useCallback(() => navigation.navigate('AddSymbol'), [navigation]);
 
   useLayoutEffect(() => {
-    navigation.setOptions({ headerRight: AddButton });
+    navigation.setOptions({ headerRight: renderAddButton });
   }, [navigation]);
 
   const openDetail = useCallback((symbol: string) => navigation.navigate('StockDetail', { symbol }), [navigation]);
@@ -53,6 +53,9 @@ export function WatchlistScreen({ navigation }: Props) {
         data={watchlist}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
+        // Android + New Architecture: clipped-subview removal re-parents native views and crashes
+        // with "child already has a parent" (seen with swipeable rows). Pointless for ≤ 25 rows anyway.
+        removeClippedSubviews={false}
         contentContainerStyle={watchlist.length === 0 ? styles.flex : undefined}
         ListEmptyComponent={
           <StateView kind="empty" title="Your watchlist is empty" message="Add symbols to follow their prices." actionLabel="Add symbol" onAction={openAdd} />
@@ -68,6 +71,8 @@ export function WatchlistScreen({ navigation }: Props) {
 }
 
 const keyExtractor = (symbol: string) => symbol;
+
+const renderAddButton = () => <AddButton />;
 
 function AddButton() {
   const theme = useTheme();

@@ -38,6 +38,7 @@ export function AddSymbolScreen({ navigation }: Props) {
         data={available}
         keyExtractor={s => s}
         keyboardShouldPersistTaps="handled"
+        removeClippedSubviews={false}
         contentContainerStyle={available.length === 0 ? styles.flex : undefined}
         renderItem={({ item }) => (
           <Pressable
