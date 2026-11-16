@@ -28,12 +28,11 @@ describe('SimulatedFeed', () => {
   });
   afterEach(() => jest.useRealTimers());
 
-  const run = (feed: SimulatedFeed, ms: number) => {
+  const run = (_feed: SimulatedFeed, ms: number) => {
     for (let t = 0; t < ms; t += 10) {
       now += 10;
       jest.advanceTimersByTime(10);
     }
-    void feed;
   };
 
   const make = (opts = {}) =>

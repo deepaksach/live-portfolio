@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore
 import { positionMetrics, sortSymbols, type SortDir, type SortKey } from '../domain/portfolio';
 import type { Holding, Quote } from '../domain/types';
 import { priceStore } from '../app/services';
+import { usePortfolioStore } from './portfolioStore';
 
 /** Live quote for one symbol. Re-renders only when that symbol changes. */
 export function useQuote(symbol: string): Quote | undefined {
@@ -87,4 +88,15 @@ export function useSortedSymbols(
     // `version` is the trigger to recompute against the latest prices.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [holdings, sortKey, sortDir, filter, priceDependent ? version : 0]);
+}
+
+/** True once the persisted portfolio/watchlist has been read from storage. */
+export function usePortfolioHydrated(): boolean {
+  const [hydrated, setHydrated] = useState(() => usePortfolioStore.persist.hasHydrated());
+  useEffect(() => {
+    const unsubscribe = usePortfolioStore.persist.onFinishHydration(() => setHydrated(true));
+    setHydrated(usePortfolioStore.persist.hasHydrated());
+    return unsubscribe;
+  }, []);
+  return hydrated;
 }
