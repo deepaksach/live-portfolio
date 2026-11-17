@@ -109,4 +109,4 @@ The API is called once on start and on pull-to-refresh, never polled. It returns
 
 ## Time spent
 
-Roughly TIME_SPENT_HOURS hours.
+Roughly 6-10 hours.
