@@ -9,6 +9,7 @@ import { priceStore } from '../app/services';
 import { useQuote } from '../state/hooks';
 import { selectHolding, usePortfolioStore } from '../state/portfolioStore';
 import { Chip } from '../ui/components/Chip';
+import { PausedBanner } from '../ui/components/PausedBanner';
 import { useTheme } from '../ui/theme';
 import type { RootStackParamList } from '../navigation/types';
 
@@ -59,6 +60,7 @@ export function TradeSheet({ route, navigation }: Props) {
       <Pressable style={[StyleSheet.absoluteFill, { backgroundColor: theme.colors.overlay }]} onPress={navigation.goBack} accessibilityLabel="Close" />
       <KeyboardAvoidingView behavior="padding">
         <View style={[styles.sheet, { backgroundColor: theme.colors.card, paddingBottom: insets.bottom + 16 }]}>
+          <PausedBanner />
           {filled ? (
             <>
               <Text style={[styles.title, { color: theme.colors.text }]}>Order filled</Text>

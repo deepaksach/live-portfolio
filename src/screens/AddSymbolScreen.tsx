@@ -3,6 +3,7 @@ import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-na
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SYMBOLS } from '../data/symbols';
 import { usePortfolioStore } from '../state/portfolioStore';
+import { PausedBanner } from '../ui/components/PausedBanner';
 import { StateView } from '../ui/components/StateView';
 import { useTheme } from '../ui/theme';
 import type { RootStackParamList } from '../navigation/types';
@@ -24,6 +25,7 @@ export function AddSymbolScreen({ navigation }: Props) {
 
   return (
     <View style={[styles.flex, { backgroundColor: theme.colors.background }]}>
+      <PausedBanner />
       <TextInput
         value={query}
         onChangeText={setQuery}
